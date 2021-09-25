@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MiniJs</title>
+    <style>
+        *{
+            padding: 0px;
+            margin: 0px;
+            box-sizing: border-box;
+            list-style: disc;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body{
+            margin: 50px auto;
+            width: 80%;
+            display: flex;
+            flex-direction: column;
+        }
+        body>div{
+            width: 100%;
+            flex-wrap: wrap;
+            padding: 1%;
+            margin-top: 20px;
+            box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        body>div>div:nth-child(1){
+            width: 80%;
+        }
+        li{
+            font-size: 22px;
+            color: rgb(1, 63, 63);
+            font-weight: 500;
+            margin-left: 3%;
+        }
+        .allButtons{
+            width: 100%;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        button{
+            height: 60px;
+            width: 150px;
+            background-color: crimson;
+            color: white;
+            font-weight: 400;
+            font-size: 25px;
+            border: none;
+            box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: .3s all ease;
+        }
+        .allButtons>button{
+            height: 60px;
+            width: 150px;
+            background-color: rgb(66, 129, 247);
+            color: white;
+            font-weight: 400;
+            font-size: 25px;
+            border: none;
+            box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: .3s all ease;
+        }
+        button:hover{
+            color: crimson;
+            background-color: inherit;
+        }
+        .allButtons>button:hover{
+            background-color: rgb(251, 252, 253);
+            color: rgb(9, 85, 224);
+        }
+        body>div>div>ul:nth-child(1){
+            font-size: 25px;
+            color: rgb(4, 76, 211);
+        }
+        .displayInfo{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="allButtons">
+        <button onclick="handleObj()">Objects</button>
+        <button onclick="handleArray()">Arrays</button>
+        <button onclick="handleFunc()">Functions</button>
+        <button onclick="handleString()">Strings</button>
+        <button onclick="handleNum()">Numbers</button>
+        <button onclick="handleNull()">null</button>
+        <button onclick="handleUndefined()">undefined</button>
+    </div>
+    
+    <div class="objectInfo displayInfo">
+        <div>
+            <ul>Object</ul>
+            <ul>
+                <li>Everything in Javascript created using new Keyword is an object.</li>
+                <li>Threre is many way to create an object like using curly braces ,using functions or using object.create()  Method.</li>
+                <li>We can access value inside object using dot Notation or by using square bracket.</li>
+                <li>Object store information in key value pair method</li>
+                <li>To add new key value value or to modify existing key value pair we using dot notation</li>
+            </ul>
+        </div>
+        <button onclick="handleRemove()">Remove</button>
+    </div>
+    <div class="arrayInfo displayInfo">
+        <div>
+            <ul>Array</ul>
+            <ul>
+                <li>Array is also an another kind of object and its a non-primitive Datatype.</li>
+                <li>There are many ways to create an Array like using square bracket or by using Array.from().</li>
+                <li>To add new element to an array we use push and to remove last element we use pop</li>
+                <li>There are many others methods available in array to modify it</li>
+                <li>There are also many ways available to loop an array like for loop while loop or by using for x in  array or by using higher order function like map</li>
+            </ul>
+        </div>
+        <button onclick="handleRemove()">Remove</button>
+    </div>
+    <div class="functionInfo displayInfo">
+        <div>
+            <ul>Functions</ul>
+            <ul>
+                <li>Functions are one of the fundamental building blocks in JavaScript</li>
+                <li> To use a function, you must define it somewhere in the scope from which you wish to call it.</li>
+                <li>A function definition (also called a function declaration, or function statement consists of the function keyword, followed by the name of the function </li>
+                <li>We can also pass various primitive and non primitive datatype as arguments to the function.</li>
+                <li>Threre are many ways to call function like by call(),bind() and apply() mathod</li>
+            </ul>
+        </div>
+        <button onclick="handleRemove()">Remove</button>    
+    </div>
+    <div class="stringInfo displayInfo">
+        <div>
+            <ul>String</ul>
+            <ul>
+                <li>The String object is used to represent and manipulate a sequence of characters.</li>
+                <li>The strings in javascript are immutable it cannot br modified.</li>
+                <li>There are many methods defined for string like length, indexOf, charAt strCmp</li>
+                <li>There are two ways to access an individual character in a string. The first is the charAt() method and second in square bracket method.</li>
+            </ul>
+        </div>
+        <button onclick="handleRemove()">Remove</button>    
+    </div>
+    <div class="numberInfo displayInfo">
+        <div>
+            <ul>Numbers</ul>
+            <ul>
+                <li>Number is a primitive wrapper object used to represent and manipulate numbers like 37 or -9.25.</li>
+                <li>The Number constructor contains constants and methods for working with numbers.</li>
+                <li>Number may also be expressed in literal forms like 0b101, 0o13, 0x0A.</li>
+                <li>When used as a function, Number(value) converts a string or other value to the Number type. If the value can't be converted, it returns NaN.</li>
+                <li>Number() Creates a new Number value.</li>
+            </ul>
+        </div>
+        <button onclick="handleRemove()">Remove</button>    
+    </div>
+    <div class="nullInfo displayInfo">
+        <div>
+            <ul>null</ul>
+            <ul>
+                <li>The value null represents the intentional absence of any object value.</li>
+                <li>It is one of JavaScript's primitive values and is treated as falsy for boolean operations.</li>
+                <li>The value null is written with a literal: null. null is not an identifier for a property of the global object, like undefined can be.</li>
+                <li>Instead, null expresses a lack of identification, indicating that a variable points to no object. In APIs, null is often retrieved in a place where an object can be expected but no object is relevant.</li>
+            </ul>
+        </div>
+        <button onclick="handleRemove()">Remove</button>    
+    </div>
+    <div class="undefinedInfo displayInfo">
+        <div>
+            <ul>undefined</ul>
+            <ul>
+                <li>The global undefined property represents the primitive value undefined</li>
+                <li>It is one of JavaScript's primitive types.</li>
+                <li>undefined is a property of the global object.</li>
+                <li>A variable that has not been assigned a value is of type undefined</li>
+                <li> A method or statement also returns undefined if the variable that is being evaluated does not have an assigned value.</li>
+                <li>A function returns undefined if a value was not returned.</li>
+            </ul>
+        </div>
+        <button onclick="handleRemove()">Remove</button>    
+    </div>
+
+    <script>
+        
+        
+        function handleObj() {
+            
+            document.querySelector('.objectInfo').style.display = "flex"
+            
+        }
+        function handleArray() {
+            
+            document.querySelector('.arrayInfo').style.display = "flex"
+            
+        }
+        function handleFunc() {
+            
+            document.querySelector('.functionInfo').style.display = "flex"
+            
+        }
+        function handleString() {
+            
+            document.querySelector('.stringInfo').style.display = "flex"
+            
+        }
+        function handleNum() {
+            
+            document.querySelector('.numberInfo').style.display = "flex"
+            
+        }
+        function handleNull() {
+            
+            document.querySelector('.nullInfo').style.display = "flex"
+            
+        }
+        function handleUndefined() {
+            
+            document.querySelector('.undefinedInfo').style.display = "flex"
+            
+        }
+
+        function handleRemove() {
+            event.target.parentNode.style.display = "none"
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News</title>
+    <style>
+        *{
+            padding: 0px;
+            margin: 0px;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body{
+            width: 100%;
+
+        }
+        .header {
+            height: 150px;
+            width: 100%;
+            background-color:rgb(149, 219, 240);
+            display:flex;
+            justify-content:space-around;
+            align-items:center; 
+        }
+        .header > a{
+            font-size:30px;
+            text-decoration:none;
+            color: crimson;
+        }
+        .mainContainer{
+            width: 100%;
+            display:grid;
+            grid-template-columns: repeat(2,45%);
+            place-content: center;
+            grid-gap: 50px;
+        }
+        .newsContainer{
+            margin-top: 30px;
+            border:1px solid red;
+            width:100%;
+            /* height: 450px; */
+            padding:3%;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            border-radius:10px;
+        }
+        .newsContainer > img{
+            background-position: center;
+            width: 70%;
+        }
+        .newsContainer > p{
+            font-size: 22px;
+            color: crimson;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="./entertainment.html">Entertainment</a>
+        <a href="./sports.html">Sports</a>
+        <a href="./tech.html">Technology</a>
+    </div>
+    <div class="mainContainer">
+        <!-- <div class="newsContainer">
+            <img src="https://apicms.thestar.com.my/uploads/images/2021/09/25/1307139.jpg" alt="">
+            <p>Title</p>
+            <p>Description</p>
+            <p>2021-09-24</p>
+            <p>Author</p>
+            <a href="#">READ MORE</a>
+        </div> -->
+        <!-- <div class="newsContainer">
+            <img src="https://apicms.thestar.com.my/uploads/images/2021/09/25/1307139.jpg" alt="">
+        </div> -->
+        <!-- <div class="newsContainer">
+            <img src="https://apicms.thestar.com.my/uploads/images/2021/09/25/1307139.jpg" alt="">
+        </div> -->
+    </div>
+
+    <script>
+        const API_KEY = "9f1345b135304f4c8ef49a3d5a65535a"
+        var value = "technology"
+        async function handleFetch(){
+            let response = await fetch(`https://newsapi.org/v2/everything?q=${value}&from=2021-09-25&sortBy=popularity&apiKey=${API_KEY}&_limit=10`)
+            response = await response.json()
+            // console.log(response);
+            return response.articles
+        }
+
+        async function handleShow(){
+            var data = await handleFetch()
+            var displayDiv = document.querySelector('.mainContainer')
+            for(var ele of data){
+
+                var container = document.createElement('div')
+    
+                container.classList.add('newsContainer')
+                container.innerHTML = `
+                
+                <img src="${ele.urlToImage}" alt="">
+                <p>${ele.title}</p>
+                <p>${ele.description}</p>
+                <p>${ele.publishedAt.split("T")[0]}</p>
+                <p>${ele.author?ele.author:""}</p>
+                <a href="${ele.url}">READ MORE</a>
+                `
+                displayDiv.append(container)
+            }
+        }
+        handleShow()
+    </script>
+</body>
+</html>

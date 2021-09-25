@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Movie</title>
+    <style>
+        *{
+            padding: 0px;
+            margin: 0px;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body{
+            width: 100%;
+        }
+        .navbar{
+            display: flex;
+            padding: 1.5%;
+            /* border: 1px solid green; */
+            box-shadow: rgba(0, 0, 0, 0.16) 0px 4px 10px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+        }
+        .navbarLeft{
+            width: 50%;
+        }
+        .navbarRight{
+            width: 50%;
+            /* border: 1px solid red; */
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        .navbarRight>a{
+            font-size: 25px;
+            font-weight: 400;
+            text-decoration: none;
+            color: rgb(26, 25, 25);
+            transition: .3s all ease-in-out;
+        }
+        .navbarRight>a:hover{
+            font-weight: 500;
+            color: indigo;
+        }
+        .slideShowContainer{
+            width: 60%;
+            margin: 50px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .slideShow{
+            width: 85%;
+            /* border: 1px solid red; */
+            height: 600px;
+            position: relative;
+        }
+        .slideShow>img{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            animation: fade .6s linear 1;
+        }
+        .fas{
+            color: black;
+            font-size: 50px;
+            padding: 10px;
+            cursor: pointer;
+            
+        }
+        @keyframes fade {
+            0%{
+                opacity: .3;
+            }
+            100%{
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbarLeft">
+
+        </div>
+        <div class="navbarRight">
+            <a href="#">Home</a>
+            <a href="#">Login</a>
+            <a href="#">Signup</a>
+        </div>
+    </div>
+
+    <div class="slideShowContainer">
+        <i class="fas fa-chevron-left" onclick="handleLeft()"></i>
+        <div class="slideShow">
+            <img src="https://images.unsplash.com/photo-1632069865081-2eb223d9ba2d?ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDN8Ym84alFLVGFFMFl8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="">
+            <img src="https://images.unsplash.com/photo-1620003140644-1fac5d228c70?ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDR8Ym84alFLVGFFMFl8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="">
+            <img src="https://images.unsplash.com/photo-1463681457836-cc9f3f99608b?ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDE1fGJvOGpRS1RhRTBZfHxlbnwwfHx8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="">
+            <img src="https://images.unsplash.com/photo-1601588418480-f9923200a05f?ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDMyfGJvOGpRS1RhRTBZfHxlbnwwfHx8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="">
+        </div>
+        <i class="fas fa-chevron-right" onclick="handleRight()"></i>
+    </div>
+
+    <script>
+        
+        var count = 0
+        
+        function handleRight() {
+            var allSlide = document.querySelector('.slideShow')
+            var size = allSlide.children.length
+            var toDisplay = count%size
+            console.log("Right =>",toDisplay);
+            for(var i=0;i<size;i++){
+                if (i==toDisplay) {
+                    allSlide.children[i].style.display = "block"
+                    console.log(allSlide.children[i]);
+                }else{
+                    allSlide.children[i].style.display = "none"
+                }
+            }
+            count++
+            console.log("Count =>",count);
+            // console.log(count);
+        }
+        function handleLeft() {
+            var allSlide = document.querySelector('.slideShow')
+            var size = allSlide.children.length
+
+            if (count==0) {
+                count=size
+                var toDisplay = count%size
+            }else{ 
+                var toDisplay = --count%size
+                
+            }
+            console.log("Left =>",toDisplay);
+            for(var i=0;i<size;i++){
+                if (i==toDisplay) {
+                    allSlide.children[i].style.display = "block"
+                    console.log(allSlide.children[i]);
+                }else{
+                    allSlide.children[i].style.display = "none"
+                }
+            }
+            console.log("Count =>",count);
+            // console.log(count);
+        }
+        
+    </script>
+</body>
+</html>

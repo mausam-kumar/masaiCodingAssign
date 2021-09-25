@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <title>commerceFour</title>
+    <style>
+        *{
+            padding: 0px;
+            margin: 0px;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body{
+            width: 100%;
+        }
+        .topHeader{
+            display: flex;
+            justify-content: space-around;
+            padding: 1%;
+            box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+        }
+        .topHeader>div:nth-child(3){
+            width: 33%;
+            /* border: 1px solid crimson; */
+            display: flex;
+            justify-content: space-between;
+        }
+        .applyPromo{
+            display: flex;
+            width: 70%;
+            /* border: 1px solid black; */
+        }
+        .applyPromo>input{
+            height: 40px;
+            margin-top: 40px;
+            border-radius: 5px;
+            border: none;
+            padding: 2%;
+            font-size: 22px;
+            color: rgb(22, 22, 22);
+            outline: none;
+            box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.466) 0px 0px 0px 1px;
+
+        }
+        .applyPromo>button,.checkoutButtons>button{
+            height: 50px;
+            margin: 30px;
+            border-radius: 5px;
+            border: none;
+            padding: 4%;
+            font-size: 22px;
+            color: rgb(22, 22, 22);
+            outline: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgb(67, 121, 221);
+            color: white;
+            transition: .4s all ease;
+            cursor: pointer;
+        }
+
+        .headerLogo>p{
+            font-size: 40px;
+            color: cadetblue;
+            font-weight: 600;
+        }
+        .cartLogo{
+            display: flex;
+            position: relative;
+        }
+        .fa-shopping-cart{
+            font-size: 70px;
+            color: cornflowerblue;
+            cursor: pointer;
+        }
+        .cartLogo>p{
+            font-size: 30px;
+            margin-left: 10px;
+            color: rgb(239, 241, 245);
+            position: relative;
+            left: -50%;
+        }
+        .heroSection{
+            margin-top: 50px;
+            width: 100%;
+            display: flex;
+            /* border: 1px solid red; */
+        }
+        .productInput{
+            width: 30%;
+            padding: 2%;
+            /* border-right: 1px solid rgb(75, 74, 74); */
+            box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+        }
+        
+        .inputForm{
+            margin: 50px auto;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+            border-radius: 10px;
+            padding: 3%;
+        }
+        .inputForm>input,.inputForm>button{
+            height: 50px;
+            margin-top: 30px;
+            border-radius: 5px;
+            border: none;
+            padding: 5%;
+            font-size: 22px;
+            color: rgb(22, 22, 22);
+            outline: none;
+            box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.466) 0px 0px 0px 1px;
+        }
+        .inputForm>button{
+            
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgb(67, 121, 221);
+            color: white;
+            transition: .4s all ease;
+            cursor: pointer;
+        }
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }   
+        .displayProduct{
+            width: 70% ;
+            display: grid;
+            grid-template-columns: repeat(3,32.5%);
+            /* border: 1px solid red; */
+        }
+        .productCard{
+            /* border: 1px solid rgb(1, 19, 53); */
+            margin-left:3px;
+            padding: 2%;
+            width: 100%;
+            height: 550px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+        }
+        .productCard>img{
+            width: 100%;
+            background-size: cover;
+        }
+        .productCard>p:nth-child(2){
+            font-size: 20px;
+            color: rgb(37, 37, 37);
+            font-weight: 500;
+        }
+        .productCard>p:nth-child(3){
+            font-size: 20px;
+            color: rgb(37, 37, 37);
+            font-weight: 500;
+        }
+        .addToCart{
+            height: 50px;
+            width: 70%;
+            font-size: 22px;
+            color: white;
+            background-color: royalblue;
+            border-radius: 10px;
+            outline: none;
+            border: none;
+            cursor: pointer;
+            transition: .3s all ease;
+        }
+        .addToCart:hover{
+            background-color: inherit;
+            color: rgb(3, 48, 184);
+            box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.541) 0px 0px 0px 1px;;
+        }
+        .cartItems{
+            width: 30%;
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: flex-start;
+            top: 10%;
+            left: 26%;
+            background-color: white;
+            z-index: 5;
+            padding: 1% 2%;
+            border-radius: 10px;
+            display: none;
+            transition: .4s all ease;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+        }
+        .cartItemsCardContainer{
+            display: flex;
+            flex-direction: column;
+        }
+        .cartItemsCard{
+            padding: 4%;
+            margin-top: 10px;
+            box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+            
+        }
+        .cartItemsCardName,.cartItemsCardPrice{
+            font-size: 22px;
+            width: 100%;
+            margin-top: 10px;
+            font-weight: 500;
+            color: rgb(5, 63, 170);
+        }
+        .cartItemsSubTotal{
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            /* border: 1px solid red; */
+        }
+        .cartItemsSubTotal>p{
+            padding: 4%;
+            font-size: 22px;
+            width: 100%;
+            font-weight: 500;
+            color: crimson;
+        }
+    </style>
+</head>
+<body>
+    <div class="topHeader">
+        <div class="headerLogo">
+            <p>E Commerce</p>
+        </div>
+        <div class="cartLogo" onclick="handleCartClick()">
+            <i class="fas fa-shopping-cart"></i>
+            <p class="cartCount">0</p>
+        </div>
+        <div>
+            <div class="applyPromo">
+                <input type="text" name="promo" id="promoCode" placeholder="Enter Promo Code">
+                <button type="submit" onclick="handleApplyCoupan()">Apply</button>
+            </div>
+            <div class="checkoutButtons">
+                <button type="submit" onclick="handleCheckout()">Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="heroSection">
+
+        <div class="productInput">
+            <form method="POST" action="" class="inputForm">
+                <input type="text" name="name" id="productName" placeholder="Enter Product Name">
+                <input type="number" name="price" id="productPrice" placeholder="Enter Product Price">
+                <input type="url" name="productImage" id="productUrl" placeholder="Enter Product image URL">
+                <button type="submit" onclick="handleInput()">Submit</button>
+            </form>
+        </div>
+        <div class="displayProduct">
+            <!-- <div class="productCard">
+                <img src="https://rukminim1.flixcart.com/image/416/416/kq6yefk0/television/e/p/w/l50m5-5ain-mi-original-imag4969ybwxqwza.jpeg?q=70" alt="">
+                <p>APPLE iPhone 12 (Blue, 128 GB)</p>
+                <p>₹68,999</p>
+                <button class="addToCart">ADD TO CART</button>
+            </div> -->
+            
+        </div>
+        
+    </div>
+
+    <div class="cartItems">
+        <div class="cartItemsCardContainer">
+            <!-- <div class="cartItemsCard">
+                <p class="cartItemsCardName">Samsung</p>
+                <p class="cartItemsCardPrice">₹529</p>
+            </div> -->
+        </div>
+        <div class="cartItemsSubTotal">
+            <p>Total Amount</p>
+            <p class="cartItemsSubTotalAmount">0</p>
+        </div>
+    </div>
+
+    <script>
+
+        // function to create new product
+
+        function productObj(name,price,image) {
+            this.productName = name
+            this.productPrice = price
+            this.productImage = image
+        }
+
+
+        // check weather product storage and cart storage section present in local storage or not if not then crate new one
+        if (!localStorage.getItem("products")) {
+            localStorage.setItem("products",JSON.stringify([]))
+        }
+        if (!localStorage.getItem("cartItems")) {
+            localStorage.setItem("cartItems",JSON.stringify([]))
+        }
+
+        var allItems = []
+
+        // manually adding some product
+
+        allItems.push(new productObj("SAMSUNG Crystal 4K Pro 108 cm (43 inch) Ultra HD (4K) LED Smart TV with Voice Search  (UA43AUE70AKLXL)",40990,"https://rukminim1.flixcart.com/image/416/416/ko1smfk0/television/1/r/d/ua43aue60aklxl-ua43aue60aklxl-samsung-original-imag2hg7b55y8xhs.jpeg?q=70"))
+
+        allItems.push(new productObj("SAMSUNG 8 138 mm (55 inch) Ultra HD (4K) LED Smart TV  (UA55AU8000)",66000,"https://rukminim1.flixcart.com/image/416/416/krgohow0/television/0/b/e/ua55au8000-samsung-original-imag58wzgn4zhgqt.jpeg?q=70"))
+
+        allItems.push(new productObj("SAMSUNG 80 cm (32 inch) HD Ready LED Smart TV with Voice Search  (UA32TE40FAKBXL)",19240,"https://rukminim1.flixcart.com/image/416/416/kq6yefk0/television/e/p/w/l50m5-5ain-mi-original-imag4969ybwxqwza.jpeg?q=70"))
+
+        allItems.push(new productObj("Mi 4A PRO 80 cm (32 inch) HD Ready LED Smart Android TV",16999,"https://rukminim1.flixcart.com/image/416/416/kq6yefk0/television/n/w/v/l32m5-al-mi-original-imag4967mvqvpvgp.jpeg?q=70"))
+
+        allItems.push(new productObj("LG 108 cm (43 inch) Full HD LED Smart TV  (43LM5650PTA)",33990,"https://rukminim1.flixcart.com/image/416/416/ked56kw0/television/r/m/a/lg-43lm5650pta-43lm5650pta-original-imafvfq5jpcjzh2m.jpeg?q=70"))
+
+        allItems.push(new productObj("realme 126 cm (50 inch) Ultra HD (4K) LED Smart Android TV with Handsfree Voice Search and Dolby Vision & Atmos  (RMV2005)",39999,"https://rukminim1.flixcart.com/image/416/416/kosxzm80/television/5/p/e/rmv2005-realme-original-imag36hxruzv9wex.jpeg?q=70"))
+
+
+        localStorage.setItem("products",JSON.stringify(allItems))
+
+        var totalProduct = Array.from(JSON.parse(localStorage.getItem("products")))
+
+        // looping through all products to display 
+
+        for(var i=0;i<totalProduct.length;i++){
+            var mainDiv = document.createElement('div')
+            mainDiv.classList.add("productCard")
+            mainDiv.innerHTML = `
+            <img src="${totalProduct[i].productImage}" alt="">
+                <p>${totalProduct[i].productName}</p>
+                <p>₹${totalProduct[i].productPrice}</p>
+                <button onclick="handleAddToCart()" class="addToCart">ADD TO CART</button>
+            `
+            document.querySelector('.displayProduct').append(mainDiv)
+        }
+
+
+        // function handling the product input form function 
+
+        function handleInput() {
+            event.preventDefault()
+            var productDesc = document.querySelector('.inputForm')
+            var newProduct = new productObj(productDesc.children[0].value,productDesc.children[1].value,productDesc.children[2].value)
+            
+            var res = Array.from(JSON.parse(localStorage.getItem("products")))
+            console.log("res before push => ",res);
+            res.push(newProduct)
+            localStorage.setItem("products",JSON.stringify(res))
+            // console.log("newProduct => ",newProduct);
+            // console.log("res after push =>",res);
+            
+            productDesc.children[0].value = ""
+            productDesc.children[1].value = ""
+            productDesc.children[2].value = ""
+            location.reload();
+        }
+        
+        // function handling add to cart function
+
+        
+        function handleAddToCart() {
+            var targetEle = event.target.parentNode
+            var newCartProduct = new productObj(targetEle.children[1].innerText,targetEle.children[2].innerText,targetEle.children[0].getAttribute("src"))
+            var res = Array.from(JSON.parse(localStorage.getItem("cartItems")))
+            for(var i=0;i<res.length;i++){
+                if (res[i].productImage==targetEle.children[0].getAttribute("src")) {
+                    alert("Item already present in the cart")
+                    return
+                }
+                
+            }
+
+            res.push(newCartProduct)
+            
+            localStorage.setItem("cartItems",JSON.stringify(res))
+            
+            console.log(res);
+            document.querySelector('.cartCount').innerText = res.length
+        }
+        document.querySelector('.cartCount').innerText = Array.from(JSON.parse(localStorage.getItem("cartItems"))).length
+
+
+        var cartToggle = false
+        function handleCartClick() {
+
+            document.querySelector('.cartItemsCardContainer').innerHTML = ""
+            var allCartItems = Array.from(JSON.parse(localStorage.getItem("cartItems")))
+            var totalCartAmount = 0
+            for(var i=0;i<allCartItems.length;i++){
+                var newCartDiv = document.createElement('div')
+                newCartDiv.classList.add('cartItemsCard')
+                newCartDiv.innerHTML = `
+                    <p class="cartItemsCardName">${allCartItems[i].productName}</p>
+                    <p class="cartItemsCardPrice">${allCartItems[i].productPrice}</p>
+                `
+                document.querySelector('.cartItemsCardContainer').append(newCartDiv)
+                totalCartAmount += Number(allCartItems[i].productPrice.slice(1))
+            }
+            console.log(totalCartAmount);
+            document.querySelector('.cartItemsSubTotalAmount').innerText = totalCartAmount
+            if (cartToggle==false) {
+                document.querySelector('.cartItems').style.display = "block"
+                document.querySelector('.heroSection').style.opacity = ".5"
+                
+                cartToggle = true
+            }else{
+                
+                document.querySelector('.cartItems').style.display = "none"
+                document.querySelector('.heroSection').style.opacity = "1"
+                cartToggle = false
+            }
+        }
+
+        function handleApplyCoupan() {
+            var inputVal = document.querySelector('#promoCode').value
+            if (inputVal=="masai30") {
+                var totalAmount = Number(document.querySelector('.cartItemsSubTotalAmount').innerText)
+                document.querySelector('.cartItemsSubTotalAmount').innerText = totalAmount-Math.floor(totalAmount*.3)
+            }
+            document.querySelector('#promoCode').value = ""
+        }
+
+        function handleCheckout() {
+            alert("Thank you for purchasing")
+        }
+    </script>
+</body>
+</html>

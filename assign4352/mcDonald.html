@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>McDonald</title>
+    <style>
+        *{
+            padding: 0px;
+            margin: 0%;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body{
+            width: 100%;
+
+        }
+        .orderId{
+            width: 100%;
+            /* border: 1px solid red; */
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            font-size: 30px;
+            color: rgb(46, 142, 221);
+            box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+        }
+        button{
+            height: 50px;
+            width: 150px;
+            background-color:rgb(12, 97, 207);
+            border-radius: 10px;
+            border: none;
+            outline: none;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana;
+            font-size: 23px;
+            color: bisque;
+            cursor: pointer;
+        }
+        .foodCardContainer{
+            display: flex;
+            /* border:1px solid green; */
+            margin-top: 20px;
+            justify-content:space-around;
+            align-items:center;
+        }
+        .foodCard{
+            display: flex;
+            align-items:center;
+            justify-content: center;
+            flex-direction:column;
+            padding:4%;
+            box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+        }
+        .foodCard>img{
+            display: none;
+        }
+        .foodCard >p{
+            font-size: 30px;
+            color: rgb(46, 142, 221);
+        }
+        input[type="checkbox"]{
+            appearance:none;
+            height: 50px;
+            width: 50px;
+            font-family: Font Awesome 5 Free;
+            margin-top: 30px;
+            background-color:rgb(71, 69, 69);
+            border-radius: 10px;
+            display: flex;
+            align-items:center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        input[type="checkbox"]:after{
+            
+            font-size: 30px;
+            display: none;
+            content:"✓";
+        }
+        input[type="checkbox"]:checked{
+            /* display: flex; */
+            background-color:rgb(55, 144, 247);
+        }
+        input[type="checkbox"]:checked:after{
+            display: flex;
+            
+        }
+        .foodDisplay>p{
+            font-size: 30px;
+            color: rgb(46, 142, 221);
+            width:10%;
+        }
+        .foodDisplay{
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        .displayOrder{
+            width: 80%;
+            display: flex;
+            justify-content: space-around;
+        }
+    </style>
+</head>
+<body>
+    <div class="orderId">
+        <p class="order">OrderID >> 0</p>
+        <button id="" onclick="handleClick()">OrderNow</button>
+    </div>
+    <div class="foodCardContainer">
+        <div class="foodCard">
+            <img src="https://www.mcdonalds.com/is/image/content/dam/usa/nfl/nutrition/items/iconic/desktop/t-mcdonalds-Big-Mac.jpg?$Category_Desktop$" alt="">
+            <p>BigMac</p>
+            <input type="checkbox" onclick="handleCheck()" name="BigMac" id="BigMac">
+        </div>
+        <div class="foodCard">
+            <img src="https://www.mcdonalds.com/is/image/content/dam/usa/nfl/nutrition/items/iconic/desktop/t-mcdonalds-Double-Quarter-Pounder-with-Cheese.jpg?$Category_Desktop$" alt="">
+            <p>Doubal Quarter</p>
+            <input type="checkbox" onclick="handleCheck()" name="DoubleQ" id="DoubleQ">
+        </div>
+        <div class="foodCard">
+            <img src="https://www.mcdonalds.com/is/image/content/dam/usa/nfl/nutrition/items/iconic/desktop/t-mcdonalds-spicy-deluxe-crispy-chicken-sandwich.jpg?$Category_Desktop$" alt="">
+            <p>ChickenSandwich</p>
+            <input type="checkbox" onclick="handleCheck()" name="ChickenSandwich" id="ChickenSandwich">
+        </div>
+        <div class="foodCard">
+            <img src="https://www.mcdonalds.com/is/image/content/dam/usa/nfl/nutrition/items/regular/desktop/h-mcdonalds-Big-Mac-Extra-Value-Meals.jpg?$Category_Desktop$" alt="">
+            <p>ComboMeal</p>
+            <input type="checkbox" onclick="handleCheck()" name="comboMeal" id="comboMeal">
+        </div>
+    </div>
+    <div class="foodDisplay">
+        <p>YourItems</p>
+        <div class="displayOrder">
+            
+        </div>
+    </div>
+
+    <script>
+        // function handling the generation of promises
+        function generateProm(delay){
+            return new Promise(function(resolve, reject){
+                if (typeof delay !== "number") {
+                    reject("rejected")
+                    return
+                }
+                setTimeout(function(){
+                    resolve("resolved")
+                },delay);
+            })
+        }
+
+        // array to store the checked food items
+        var toDisp = []
+
+        // function to handleCheck of the food items
+        function handleCheck() {
+            toDisp.push(event.target.parentNode.children[0])
+        }
+        var count = 0
+
+        // function to handle the food order
+        function handleClick() {
+            for(var i=0; i<toDisp.length; i++) {
+                generateProm(5000).then(function () {
+                document.querySelector('.displayOrder').append(toDisp[count])
+                count++
+            })
+            }
+            
+        }
+    </script>
+</body>
+</html>
+

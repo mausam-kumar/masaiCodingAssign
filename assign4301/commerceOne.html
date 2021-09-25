@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CommerceOne</title>
+    <style>
+        *{
+            padding: 0px;
+            margin: 0px;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body{
+            width: 100%;
+        }
+        .inputForm{
+            margin: 50px auto;
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+            border-radius: 10px;
+            padding: 3%;
+        }
+        .inputForm>input,.inputForm>button{
+            height: 50px;
+            margin-top: 30px;
+            border-radius: 5px;
+            border: none;
+            padding: 5%;
+            font-size: 22px;
+            color: rgb(22, 22, 22);
+            outline: none;
+            box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.466) 0px 0px 0px 1px;
+        }
+        .inputForm>button{
+            
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgb(67, 121, 221);
+            color: white;
+            transition: .4s all ease;
+        }
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }   
+    </style>
+</head>
+<body>
+    
+    <form method="POST" class="inputForm">
+        <input type="text" name="name" id="productName" placeholder="Enter Product Name">
+        <input type="number" name="price" id="productPrice" placeholder="Enter Product Price">
+        <input type="url" name="productImage" id="productUrl" placeholder="Enter Product image URL">
+        <button type="submit" onclick="handleInput()">Submit</button>
+    </form>
+
+    <script>
+        if (!localStorage.getItem("products")) {
+            localStorage.setItem("products",JSON.stringify([]))
+        }
+        function productObj(name,price,image) {
+            this.productName = name
+            this.productPrice = price
+            this.productImage = image
+        }
+
+        function handleInput() {
+            event.preventDefault()
+            var productDesc = document.querySelector('.inputForm')
+            var newProduct = new productObj(productDesc.children[0].value,productDesc.children[1].value,productDesc.children[2].value)
+            
+            var res = Array.from(JSON.parse(localStorage.getItem("products")))
+            console.log("res before push => ",res);
+            res.push(newProduct)
+            localStorage.setItem("products",JSON.stringify(res))
+            console.log("newProduct => ",newProduct);
+            console.log("res after push =>",res);
+            productDesc.children[0].value = ""
+            productDesc.children[1].value = ""
+            productDesc.children[2].value = ""
+        }
+        
+    </script>
+</body>
+</html>

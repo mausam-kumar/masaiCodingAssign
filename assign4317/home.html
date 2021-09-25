@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie</title>
+    <style>
+        *{
+            padding: 0px;
+            margin: 0px;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body{
+            width: 100%;
+        }
+        .navbar{
+            display: flex;
+            padding: 1.5%;
+            box-shadow: rgba(0, 0, 0, 0.16) 0px 4px 10px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+        }
+        .navbarLeft{
+            width: 50%;
+        }
+        .navbarRight{
+            width: 50%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        .navbarRight>a{
+            font-size: 25px;
+            font-weight: 400;
+            text-decoration: none;
+            color: rgb(26, 25, 25);
+            transition: .3s all ease-in-out;
+        }
+        .navbarRight>a:hover{
+            font-weight: 500;
+            color: indigo;
+        }
+        .sortButtons{
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 2%;
+            margin-top: 10px;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        }
+        .sortButtons>button{
+            height: 50px;
+            padding: 1% 2%;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: rgb(91, 64, 247);
+            font-size: 19px;
+            outline: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            background-color: mintcream;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+        }
+        .movieSection{
+            margin-top: 50px;
+            display: grid;
+            grid-template-columns: repeat(3,30%);
+            place-items: center;
+            place-content: center;
+        }
+        .movieDisplayCard{
+            /* border: 1px solid red; */
+            display: flex;
+            flex-direction: column;
+            padding: 5%;
+            margin-top: 30px;
+            /* justify-content: center; */
+            text-align: center;
+            font-size: 25px;
+            font-weight: 400;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: .4s all ease-in-out;
+        }
+        .movieDisplayCard:hover{
+            box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+        }
+        .movieDisplayCard>img{
+            width: 100%;
+            object-fit: cover;
+        }
+        .movieDisplayCard>div:nth-child(3){
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbarLeft">
+
+        </div>
+        <div class="navbarRight">
+            <a href="./home.html">Home</a>
+            <a href="./login.html">Login</a>
+            <a href="./signup.html">Signup</a>
+        </div>
+    </div>
+    <div class="sortButtons">
+        <button onclick="handleLowToHigh()">Sort Low to High</button>
+        <button onclick="handleHighToLow()">Sort High to Low</button>
+    </div>
+    <div class="movieSection">
+        <!-- <div class="movieDisplayCard">
+            <img src="https://img1.hotstarext.com/image/upload/f_auto,t_web_vl_3x/sources/r1/cms/prod/6536/846536-v" alt="">
+            <p>Name</p>
+            <div>
+                <p>year</p>
+                <p>Rating</p>
+            </div>
+
+        </div> -->
+    </div>
+
+    <script>
+        
+        if (!localStorage.getItem("movieDatabase")) {
+            localStorage.setItem("movieDatabase",JSON.stringify([]))
+            localStorage.setItem("initialData","false")
+        }
+
+        function Movie(name, releaseDate, poster,rating) {
+            this.movieName = name
+            this.movieReleaseDate = releaseDate
+            this.moviePoster = poster
+            this.movieRating = rating
+        }
+
+        var nameArray = [
+            "Baaghi3","Chhichhore","Houseful4","Little Krishna","Tanaji","Hungama2","Angrezi Medium","Bhuj","Dil Bechara"
+        ]
+        var dateArray = [
+            "2020","2019","2019","2009","2020","2021","2020","2021","2020"
+        ]
+        var posterArray = [
+            "https://img1.hotstarext.com/image/upload/f_auto,t_web_vl_3x/sources/r1/cms/prod/6536/846536-v",
+            "https://img1.hotstarext.com/image/upload/f_auto,t_web_vl_3x/sources/r1/cms/prod/896/580896-v",
+            "https://img1.hotstarext.com/image/upload/f_auto,t_web_vl_3x/sources/r1/cms/prod/3669/593669-v",
+            "https://img1.hotstarext.com/image/upload/f_auto,t_web_vl_3x/sources/r1/cms/prod/3669/593669-v",
+            "https://img1.hotstarext.com/image/upload/f_auto,t_web_vl_3x/sources/r1/cms/prod/7676/647676-v",
+            "https://img1.hotstarext.com/image/upload/f_auto,t_web_vl_3x/sources/r1/cms/prod/8256/1038256-v-59a659b25342",
+            "https://img1.hotstarext.com/image/upload/f_auto,t_web_vl_3x/sources/r1/cms/prod/6699/1026699-v-cb786ee970de",
+            "https://img1.hotstarext.com/image/upload/f_auto,t_web_vl_3x/sources/r1/cms/prod/5763/1045763-v-1d9f41f00c89",
+            "https://img1.hotstarext.com/image/upload/f_auto,t_web_vl_3x/sources/r1/cms/prod/3085/723085-v"
+
+        ]
+        var ratingArray = [2.1,8.3,6.3,7.8,7.1,5.2,6.5,7.9,9.2]
+
+        var dataArray = []
+        if (localStorage.getItem("initialData")=="false") {
+            
+            for(var i=0;i<nameArray.length;i++){
+                dataArray.push(new Movie(nameArray[i],dateArray[i],posterArray[i],ratingArray[i]))
+            }
+            localStorage.getItem("initialData")=="true"
+        }
+
+        localStorage.setItem("movieDatabase",JSON.stringify(dataArray))
+
+        var fetchedData = Array.from(JSON.parse(localStorage.getItem("movieDatabase")))
+        // console.log(fetchedData);
+        for(var i=0;i<fetchedData.length;i++){
+            var mainDiv = document.querySelector(".movieSection")
+            var newDiv = document.createElement("div")
+            newDiv.classList.add("movieDisplayCard")
+            newDiv.innerHTML = `
+                <img src="${fetchedData[i].moviePoster}" alt="">
+                <p>${fetchedData[i].movieName}</p>
+                <div>
+                    <p>${fetchedData[i].movieReleaseDate}</p>
+                    <p>${fetchedData[i].movieRating}</p>
+                </div>
+            `
+            mainDiv.appendChild(newDiv)
+        }
+
+        function handleLowToHigh() {
+            var fetchedData = Array.from(JSON.parse(localStorage.getItem("movieDatabase")))
+            fetchedData.sort((a,b) => a.movieRating-b.movieRating)
+
+            var mainDiv = document.querySelector(".movieSection")
+            mainDiv.innerHTML = ""
+            for(var i=0;i<fetchedData.length;i++){
+            var newDiv = document.createElement("div")
+            newDiv.classList.add("movieDisplayCard")
+            newDiv.innerHTML = `
+                <img src="${fetchedData[i].moviePoster}" alt="">
+                <p>${fetchedData[i].movieName}</p>
+                <div>
+                    <p>${fetchedData[i].movieReleaseDate}</p>
+                    <p>${fetchedData[i].movieRating}</p>
+                </div>
+            `
+            mainDiv.appendChild(newDiv)
+        }
+        }
+        function handleHighToLow() {
+            var fetchedData = Array.from(JSON.parse(localStorage.getItem("movieDatabase")))
+            fetchedData.sort((a,b) => b.movieRating-a.movieRating)
+
+            var mainDiv = document.querySelector(".movieSection")
+            mainDiv.innerHTML = ""
+            for(var i=0;i<fetchedData.length;i++){
+            var newDiv = document.createElement("div")
+            newDiv.classList.add("movieDisplayCard")
+            newDiv.innerHTML = `
+                <img src="${fetchedData[i].moviePoster}" alt="">
+                <p>${fetchedData[i].movieName}</p>
+                <div>
+                    <p>${fetchedData[i].movieReleaseDate}</p>
+                    <p>${fetchedData[i].movieRating}</p>
+                </div>
+            `
+            mainDiv.appendChild(newDiv)
+        }
+    }
+    </script>
+</body>
+</html>

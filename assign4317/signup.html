@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie</title>
+    <style>
+        *{
+            padding: 0px;
+            margin: 0px;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body{
+            width: 100%;
+        }
+        .navbar{
+            display: flex;
+            padding: 1.5%;
+            box-shadow: rgba(0, 0, 0, 0.16) 0px 4px 10px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+        }
+        .navbarLeft{
+            width: 50%;
+        }
+        .navbarRight{
+            width: 50%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        .navbarRight>a{
+            font-size: 25px;
+            font-weight: 400;
+            text-decoration: none;
+            color: rgb(26, 25, 25);
+            transition: .3s all ease-in-out;
+        }
+        .navbarRight>a:hover{
+            font-weight: 500;
+            color: indigo;
+        }
+        .signUpForm{
+            width: 40%;
+            margin: 50px auto;
+            display: flex;
+            flex-direction: column;
+            box-shadow: rgba(0, 0, 0, 0.541) 0px 1px 2px 0px;
+            padding: 2%;
+            border-radius: 10px;
+
+        }
+
+        .signUpForm>p{
+            font-size: 25px;
+            font-weight: 400;
+            color: rgba(37, 37, 37, 0.74);
+        }
+        .signUpForm>button{
+            font-size: 25px;
+            font-weight: 400;
+            margin-top: 20px;
+            height: 50px;
+            /* width: 70%; */
+            border-radius: 5px;
+            color: rgba(37, 37, 37, 0.74);
+            border: none;
+            outline: 0;
+            color: white;
+            background-color: rgba(106, 172, 230, 0.979);
+            cursor: pointer;
+            box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.37) 0px 0px 0px 1px;
+            transition: .3s all ease-in-out;
+        }
+        .signUpForm>button:hover{
+            color: rgba(106, 172, 230, 0.979);
+            background-color: inherit;
+        }
+        .signUpForm>input{
+            height: 50px;
+            border-radius: 5px;
+            padding: 2%;
+            border: none;
+            outline: 0;
+            margin-top: 30px;
+            color: rgba(37, 37, 37, 0.74);
+            font-size: 19px;
+            font-weight: 400;
+            box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.349) 0px 0px 0px 1px;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbarLeft">
+
+        </div>
+        <div class="navbarRight">
+            <a href="./home.html">Home</a>
+            <a href="./login.html">Login</a>
+            <a href="./signup.html">Signup</a>
+        </div>
+    </div>
+    <form action="" method="get" class="signUpForm" autocomplete="on">
+        <p>Enter User Details</p>
+        <input type="text" name="userName" id="userName" placeholder="Enter user Name">
+        <input type="tel" name="userContact" id="userContact" placeholder="Enter user mobileNo">
+        <input type="email" name="userEmail" id="userEmail" placeholder="Enter user Email">
+        <input type="password" name="UserPassword" id="UserPassword" placeholder="Enter user Password">
+        <button type="submit" onclick="handleSubmit()">Register</button>
+    </form>
+
+    <script>
+
+        if(!localStorage.getItem("userDetails")) {
+            localStorage.setItem("userDetails",JSON.stringify([]))
+        }
+
+        function User(name,contact,email,password) {
+            this.userName = name
+            this.userContact = contact
+            this.userEmail = email
+            this.userPassword = password
+        }
+        function handleSubmit() {
+            event.preventDefault()
+            var targetForm = document.querySelector(".signUpForm")
+            var userName = targetForm.children[1].value
+            var userContact = targetForm.children[2].value
+            var userEmail = targetForm.children[3].value
+            var userPassword = targetForm.children[4].value
+
+            if (!userName || !userContact || !userEmail || !userPassword) {
+                alert("Please Fill all Field")
+                return
+            }
+
+            var userDetails = new User(userName,userContact,userEmail,userPassword)
+            
+            var fetchUserDetails = Array.from(JSON.parse(localStorage.getItem("userDetails")))
+           
+            fetchUserDetails.push(userDetails)
+
+            localStorage.setItem("userDetails",JSON.stringify(fetchUserDetails))
+            targetForm.children[1].value = ""
+            targetForm.children[2].value = ""
+            targetForm.children[3].value = ""
+            targetForm.children[4].value = ""
+        }
+    </script>
+</body>
+</html>

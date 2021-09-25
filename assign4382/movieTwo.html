@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+        integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Movie</title>
+    <style>
+        * {
+            padding: 0px;
+            margin: 0px;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body{
+            width: 100%;
+
+        }
+        .header{
+            height: 100px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px;
+        }
+        .header>input{
+            width:300px;
+            height: 50px;
+            padding:10px;
+            border-radius: 10px;
+            margin-right: 50px;
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+            outline: none;
+            border: none;
+            font-size:23px;
+            color: darkslategrey;
+        }
+        button{
+            width:100px;
+            height: 50px;
+            padding:10px;
+            border-radius: 10px;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            font-size:23px;
+            color: rgb(25, 43, 43);
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+            background-color:rgb(106, 151, 250);
+        }
+        .mainPoster{
+            margin-top: 50px;
+        }
+        .mainPosterContainer{
+            margin: 50px auto;
+            width: 80%;
+            display: flex;
+            justify-content:space-around;
+            align-items:center;
+            font-size: 25px;
+        }
+        .mainPosterLeft{
+            width: 90%;
+            display:flex;
+            flex-direction:column;
+            /* border: 1px solid red    ; */
+            padding:9.8%;
+            background-color:#030B17;
+            color: white;
+        }
+        .mainPosterLeftLower{
+            margin-top: 40px;
+            display:flex;
+            justify-content:space-between;
+        }
+        .mainPosterLeftLower>div{
+            display:flex;
+            flex-direction:column;
+        }
+        .mainPosterRight{
+            width: 40%;
+        }
+        .errorPage{
+            position:absolute;
+            height: 400px;
+            width: 800px;
+            /* border: 1px solid green; */
+            left: 50%;
+            transform: translateX(-50%);
+            font-size:40px;
+            color: cornflowerblue;
+            text-align:center;
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.534) 0px 2px 4px -1px;
+            display:none;
+        }
+        .errorPage > p:nth-child(2){
+            margin-top: 150px;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <input type="text" name="Movie" id="movie" placeholder="Search for a movie">
+        <button onclick="handleSearch()">
+            Search
+        </button>
+    </div>
+    <div class="mainPoster">
+        <!-- <div class="mainPosterContainer">
+            <div class="mainPosterLeft">
+                <div class="mainPosterLeftUpper">
+                    <p>Title</p>
+                    <p>2002</p>
+                </div>
+                <div class="mainPosterLeftLower">
+                    <div>
+                        <p>▶</p>
+                        <p>Watch Movie</p>
+                    </div>
+                    <div>
+                        <p>+</p>
+                        <p>WATCHLIST</p>
+                    </div>
+                    <div>
+                        <i class="fas fa-share-alt"></i>
+                        <p>SHARE</p>
+                    </div>
+                </div>
+            </div>
+            <div class="mainPosterRight">
+                <img src="https://m.media-amazon.com/images/M/MV5BMTYzOTc2NzU3N15BMl5BanBnXkFtZTcwNjY3MDE3NQ@@._V1_SX300.jpg"
+                    alt="">
+            </div>
+        </div> -->
+    </div>
+
+    <div class="errorPage">
+        <button onclick="handleClose()">X</button>
+        <p>No Movie Found</p>
+    </div>
+
+    <script type="text/javascript">
+        async function handleFetchRequest(url) {
+            var movieData = await fetch(url)
+            return await movieData.json()
+        
+        }
+
+        async function handleSearch() {
+            var movie = document.querySelector("#movie").value;
+            
+            var url = `https://www.omdbapi.com/?i=tt3896198&apikey=311a1ff&s=${movie}`
+
+            var allData = await handleFetchRequest(url)
+            allData = allData.Search
+            if (!allData) {
+                allData = []
+            }
+            var mainDiv = document.querySelector(".mainPoster")
+            mainDiv.innerHTML = ""
+            for(var i=0; i<allData.length; i++){
+                var newDiv = document.createElement("div")
+                newDiv.classList.add("mainPosterContainer")
+                newDiv.innerHTML = `
+                <div class="mainPosterLeft">
+                <div class="mainPosterLeftUpper">
+                    <p>${allData[i].Title}</p>
+                    <p>${allData[i].Year}</p>
+                </div>
+                <div class="mainPosterLeftLower">
+                    <div>
+                        <p>▶</p>
+                        <p>Watch Movie</p>
+                    </div>
+                    <div>
+                        <p>+</p>
+                        <p>WATCHLIST</p>
+                    </div>
+                    <div>
+                        <i class="fas fa-share-alt"></i>
+                        <p>SHARE</p>
+                    </div>
+                </div>
+            </div>
+            <div class="mainPosterRight">
+                <img src="${allData[i].Poster}"
+                    alt="">
+            </div>
+                `
+                mainDiv.append(newDiv)
+            }
+            if (allData.length == 0) {
+                document.querySelector('.errorPage').style.display="block"
+            }
+            
+            console.log("allData",allData.length);
+        }
+    
+    function handleClose() {
+            document.querySelector('.errorPage').style.display="none"
+            
+        }
+
+    </script>
+</body>
+
+</html>
