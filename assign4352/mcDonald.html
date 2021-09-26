@@ -149,9 +149,10 @@
                     reject("rejected")
                     return
                 }
-                setTimeout(function(){
+                const id = setTimeout(function(){
                     resolve("resolved")
                 },delay);
+                
             })
         }
 
@@ -174,6 +175,8 @@
             }
             
         }
+
+        
     </script>
 </body>
 </html>

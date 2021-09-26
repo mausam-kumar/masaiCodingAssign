@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vaccine</title>
+    <style>
+        *{
+            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 25px;
+        }
+    </style>
+</head>
+<body>
+    Name: <input type="text" id="name" />
+    AGE : <input type="Number" id="age" />
+    <button id="register" onclick="register()">Register</button>
+    <br>
+    Remaining Person:<span id="remain"></span>
+    <br>
+    Remaning Vaccine : <span id="vaccine">13</span>
+    <div id="queue">
+
+    </div>
+
+    <script>
+        const queue = ["albert","nrupul","aman","mausam"]
+
+        function checkQueue(name) {
+            return new Promise(function(resolve, reject) {
+                const id = setInterval(function() {
+                    if (queue[0]==name) {
+                        resolve(`${name} its your turn now`)
+                        clearInterval(id)
+                    }
+                },1000)
+            })
+        }
+        function register(){
+            const name = document.getElementById("name").value;
+            const age = document.getElementById("age").value;
+            console.log(age);
+            if (Number(age) >= 60) {
+                
+                let message = `${name} Its your turn`
+                queue.unshift(name)
+                alert(message)
+            }else{
+                let message = `There are ${queue.length} more people before you so Plaese wait for your turn`
+                queue.push(name)
+                alert(message)
+            }
+            
+            console.log("queue =>",queue);
+
+            checkQueue(name)
+            .then(function(message){
+                alert(message)
+            })
+            .catch(function(err){
+                console.log(err);
+            })
+
+        }
+
+        function vaccination(){
+            queue.shift()
+            if (queue.length==0) {
+                clearInterval(id)
+            }
+            visualize(queue)
+        }
+        function visualize() {
+            const qContainer = document.getElementById("queue")
+            qContainer.innerHTML = ""
+            const ul = document.createElement("ul")
+            queue.forEach(function(name){
+                const el = document.createElement("li")
+                el.textContent = name
+                ul.append(el)
+
+            })
+            document.getElementById("remain").innerText = queue.length
+            document.getElementById("vaccine").innerText -= 1 
+            if (document.getElementById("vaccine").innerText<=0) {
+                alert("Vaccine Exahusted Please come tommorow")
+            }
+            qContainer.append(ul)
+        }
+        visualize()
+
+        const id = setInterval(vaccination,3000)
+    </script>
+</body>
+</html>

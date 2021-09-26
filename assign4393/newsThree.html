@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News</title>
+    <style>
+        *{
+            padding: 0px;
+            margin: 0px;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body{
+            width: 100%;
+
+        }
+        .header {
+            height: 100px;
+            width: 100%;
+            background-color:rgb(168, 217, 231);
+            display:flex;
+            justify-content:center;
+            align-items:center; 
+        }
+        .header > input{
+            height: 50px;
+            width: 350px;
+            border-radius: 10px;
+            outline:none;
+            border: none;
+            padding:20px;
+            font-size: 22px;
+        }
+        .header>button{
+            height: 50px;
+            width: 150px;
+            border-radius: 10px;
+            outline:none;
+            border: none;
+            padding:20px;
+            font-size: 22px;
+            margin-left: 25px;
+            display: flex;
+            justify-content:center;
+            align-items:center;
+            background-color:crimson;
+            color: white;
+            cursor: pointer;
+        }
+        .mainContainer{
+            width: 100%;
+            /* display:grid;
+            grid-template-columns: repeat(2,45%);
+            place-content: center;
+            grid-gap: 50px; */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items:center;
+
+        }
+        .newsContainer{
+            margin-top: 30px;
+            /* border:1px solid red; */
+            width:60%;
+            /* height: 450px; */
+            display: flex;
+            padding:1% 1%;
+            justify-content:space-between;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            border-radius:10px;
+        }
+        .newsContainer > img{
+            background-position: center;
+            width: 50%;
+            margin-right: 10px;
+        }
+        .newsContainer > div> p{
+            font-size: 22px;
+            color: crimson;
+            margin-top: 30px;
+
+        }
+        .numberContainer{
+            display: flex;
+            justify-content:center;
+            align-items:center;
+            flex-wrap: wrap;
+        }
+        .numBtn{
+            height: 50px;
+            width: 80px;
+            border-radius: 10px;
+            outline:none;
+            border: none;
+            padding:20px;
+            font-size: 22px;
+            margin-left: 25px;
+            display: flex;
+            justify-content:center;
+            align-items:center;
+            background-color:crimson;
+            color: white;
+            cursor: pointer;
+            /* margin-left: 10px; */
+            margin: 100px 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <input type="text" name="" id="search" placeholder="Search"/>
+        <button onclick="handleShow()">Search</button>
+    </div>
+    <div class="mainContainer">
+        <!-- <div class="newsContainer">
+            <img src="https://apicms.thestar.com.my/uploads/images/2021/09/25/1307139.jpg" alt="">
+            <p>Title</p>
+            <p>Description</p>
+            <p>2021-09-24</p>
+            <p>Author</p>
+            <a href="#">READ MORE</a>
+        </div> -->
+    </div>
+
+    <div class="numberContainer">
+        <!-- <button class="numBtn">1</button>
+        <button class="numBtn">1</button>
+        <button class="numBtn">1</button>
+        <button class="numBtn">1</button> -->
+    </div>
+
+    <script>
+        const API_KEY = "9f1345b135304f4c8ef49a3d5a65535a"
+        async function handleFetch(){
+            var value = document.querySelector("#search").value;
+            try {
+                let response = await fetch(`https://newsapi.org/v2/everything?q=${value}&sortBy=popularity&apiKey=${API_KEY}&_limit=10`)
+                response = await response.json()
+                return response.articles
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        // var data = handleFetch()
+        function addPageBtn(data,itemPerPage){
+            for(var i=0; i<Math.ceil(data.length/itemPerPage); i++){
+                var newBtn = document.createElement('div')
+                newBtn.innerHTML = `<button class="numBtn" onclick="pagination(${i+1},${itemPerPage})">${i+1}</button>`
+                // var btn = document.createElement('button')
+                // btn.classList.add("numBtn")
+                // btn.addEventListener("click",pagination(data,i+1,itemPerPage))
+                // btn.innerText = i+1
+                document.querySelector(".numberContainer").append(newBtn)
+            }
+        }
+
+        async function handleShow(itemPerPage=5){
+            // console.log(value);
+            var data = await handleFetch()
+            var displayDiv = document.querySelector('.mainContainer')
+
+            addPageBtn(data,itemPerPage)
+
+            for(var i=0;i<5;i++) {
+                ele = data[i]
+                var container = document.createElement('div')
+    
+                container.classList.add('newsContainer')
+                container.innerHTML = `
+                
+                <img src="${ele.urlToImage}" alt="">
+                <div>
+                <p>${ele.title}</p>
+                <p>${ele.description}</p>
+                <p>${ele.publishedAt.split("T")[0]}</p>
+                <p>${ele.author?ele.author:""}</p>
+                <a href="${ele.url}">READ MORE</a>
+                </div>
+                `
+                displayDiv.append(container)
+            }
+        }
+
+        async function pagination(pageNo,itemPerPage) {
+            var array = await handleFetch()
+            console.log("mausam");
+            console.log("array =>",array);
+            console.log("pageNo =>",pageNo);
+            console.log("itemPerPage =>",itemPerPage);
+            var displayDiv = document.querySelector('.mainContainer')
+            displayDiv.innerHTML = ""
+            for(var i=(pageNo-1)*itemPerPage;i<pageNo*itemPerPage;i++) {
+                var ele = array[i];
+                var container = document.createElement('div')
+    
+                container.classList.add('newsContainer')
+                container.innerHTML = `
+                
+                <img src="${ele.urlToImage}" alt="">
+                <div>
+                <p>${ele.title}</p>
+                <p>${ele.description}</p>
+                <p>${ele.publishedAt.split("T")[0]}</p>
+                <p>${ele.author?ele.author:""}</p>
+                <a href="${ele.url}">READ MORE</a>
+                </div>
+                `
+                displayDiv.append(container)
+            }
+        }
+        
+    </script>
+</body>
+</html>
