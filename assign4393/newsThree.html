@@ -134,16 +134,8 @@
 
     <script>
         const API_KEY = "9f1345b135304f4c8ef49a3d5a65535a"
-        async function handleFetch(){
-            var value = document.querySelector("#search").value;
-            try {
-                let response = await fetch(`https://newsapi.org/v2/everything?q=${value}&sortBy=popularity&apiKey=${API_KEY}&_limit=10`)
-                response = await response.json()
-                return response.articles
-            } catch (error) {
-                console.log(error);
-            }
-        }
+        let data = await fetch(`https://newsapi.org/v2/everything?q=${value}&sortBy=popularity&apiKey=${API_KEY}&_limit=10`)
+        data = await response.json()
         // var data = handleFetch()
         function addPageBtn(data,itemPerPage){
             for(var i=0; i<Math.ceil(data.length/itemPerPage); i++){
@@ -159,7 +151,7 @@
 
         async function handleShow(itemPerPage=5){
             // console.log(value);
-            var data = await handleFetch()
+            // var data = await handleFetch()
             var displayDiv = document.querySelector('.mainContainer')
 
             addPageBtn(data,itemPerPage)
@@ -185,7 +177,7 @@
         }
 
         async function pagination(pageNo,itemPerPage) {
-            var array = await handleFetch()
+            var array = data
             console.log("mausam");
             console.log("array =>",array);
             console.log("pageNo =>",pageNo);

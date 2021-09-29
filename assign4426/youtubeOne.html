@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Youtube</title>
+    <style>
+        *{
+            padding: 0px;
+            margin: 0px;
+            box-sizing: border-box;
+        }
+        body{
+            width: 100%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .header{
+            width: 100%;
+            height: 100px;
+            display: flex;
+            justify-content:center;
+            align-items: center;
+            /* border:1px solid crimson; */
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+        }
+        .input{
+            display: flex;
+            justify-content:center;
+            align-items: center;
+            color: rgb(95, 95, 95);
+        }
+        .inputBox>input{
+            width: 350px;
+            height: 50px;
+            padding:5px;
+            /* margin-right: 10px; */
+            border:none;
+            outline:none;
+            font-size:21px;
+            box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+            cursor: pointer;
+        }
+        .searchIcon{
+            width:50px;
+            height: 50px;
+            display: flex;
+            justify-content:center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+        }
+        .videoContainer{
+            margin:20px auto;
+            width: 80%;
+            display: flex;
+            /* justify-content:center; */
+            /* align-items:center; */
+            /* border:1px solid red; */
+            padding:1%;
+            box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+        }
+        .videoContainerLeft{
+            width:40%;
+            /* border:1px solid blue; */
+            display: flex;
+            justify-content:center;
+            align-items:center;
+        }
+        .videoContainerRight{
+            width:70%;
+            margin-left: 50px;
+            display: flex;
+            justify-content:flex-start;
+            flex-direction:column;
+            align-items:flex-start;
+        }
+        .videoContainerRight>p{
+            font-size:22px;
+            color: crimson;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="header">
+        <div class="input">
+            <div class="inputBox">
+                <input type="text" name="inputSpace" id="inputSpace" placeholder="Search">
+            </div>
+            <div class="searchIcon" onclick="fetchData()">
+                <i class="fas fa-search"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="displayComp">
+        <!-- <div class="videoContainer">
+            <div class="videoContainerLeft">
+                
+                <video controls
+                    poster="https://i.ytimg.com/vi/R3zfXc8nVQk/mqdefault.jpg"
+                    src="https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4"
+                    width="480">
+                </video>
+            </div>
+            <div class="videoContainerRight">
+                <p>Title</p>
+                <p>2021-08-20</p>
+                <p>Channel Title</p>
+                <p>Description</p>
+            </div>
+        </div> -->
+    </div>
+
+
+
+    <script>
+        // const API_KEY = 'AIzaSyBKLPZq1SZsMZQJK67pBHm0e3U9ESX6iHU'
+        const API_KEY = 'AIzaSyD27IMd-0tvQ5vRPlPprV-FG0oY4c9MLbM'
+        async function fetchData() {
+            const config = {
+                method: 'GET',
+                header:{
+                    'Content-Type': 'application/json'
+                }
+            }
+            var searchValue = document.getElementById('inputSpace').value;
+            let data = await fetch(`https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=20&q=${searchValue}&key=${API_KEY}&type=video`,config)
+            data = await data.json()
+            data = data.items
+            console.log(data.length);
+            handleSearch(data)
+        }
+
+        
+
+        function handleSearch(data) {
+            var mainContainer = document.querySelector('.displayComp')
+            mainContainer.innerHTML = ""
+            for(var i=0; i<data.length; i++) {
+                var container = document.createElement("div")
+                container.classList.add("videoContainer")
+                let ele = data[i]
+                let snipp = ele.snippet
+                container.innerHTML = `
+                <div class="videoContainerLeft">
+                    <video controls
+                        poster="${snipp.thumbnails.high.url}"
+                        src="https://www.youtube.com/watch?v=${ele.id.videoId}"
+                        width="480">
+                    </video>
+                </div>
+                <div class="videoContainerRight">
+                    <p>${snipp.title}</p>
+                    <p>${snipp.publishedAt.split("T")[0]}</p>
+                    <p>${snipp.title}</p>
+                    <p>${snipp.description}</p>
+                </div>
+            `
+            mainContainer.append(container)
+            }
+        }
+
+    </script>
+</body>
+</html>
