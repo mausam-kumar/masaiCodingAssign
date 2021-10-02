@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Movie</title>
+    <style>
+        *{
+            padding: 0px;
+            margin: 0px;
+            box-sizing: border-box;
+        }
+        body{
+            width: 100%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .header{
+            width: 100%;
+            height: 100px;
+            display: flex;
+            justify-content:center;
+            align-items: center;
+            /* border:1px solid crimson; */
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+        }
+        .input{
+            display: flex;
+            justify-content:center;
+            align-items: center;
+            color: rgb(95, 95, 95);
+        }
+        .inputBox>input{
+            width: 350px;
+            height: 50px;
+            padding:5px;
+            /* margin-right: 10px; */
+            border:none;
+            outline:none;
+            font-size:21px;
+            box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+            cursor: pointer;
+        }
+        .searchIcon{
+            width:50px;
+            height: 50px;
+            display: flex;
+            justify-content:center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+        }
+        .showOption{
+            /* height: 400px; */
+            width: 400px;
+            /* border: 1px solid red; */
+            position: absolute;
+            box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+            left: 39.6%;
+            top: 77px;
+            background-color: white;
+            /* display:none; */
+            z-index: 1;
+        }
+        .optionsContainer{
+            height:60px;
+            width:100%;
+            box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+            padding: 10px;
+            font-size:20px;
+            cursor: pointer;
+            color: darkslategray;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="input">
+            <div class="inputBox">
+                <input type="text" name="inputSpace" id="inputSpace" placeholder="Search" onkeyup="betterFunction()">
+            </div>
+            <div class="searchIcon" onclick="fetchData()">
+                <i class="fas fa-search"></i>
+            </div>
+        </div>
+    </div>
+    <div class="showOption">
+        <!-- <div class="optionsContainer">
+            Mausam
+        </div>
+        <div class="optionsContainer">
+            Mausam
+        </div>
+        <div class="optionsContainer">
+            Mausam
+        </div>
+        <div class="optionsContainer">
+            Mausam
+        </div>
+        <div class="optionsContainer">
+            Mausam
+        </div> -->
+    </div>
+
+
+
+    <script>
+        const API_KEY = "311a1ff"
+        var visibleShowOpt = false
+        var count = 0
+        async function handleType(){
+            var inputData = document.querySelector('#inputSpace').value
+            if (inputData.length>=3) {
+                
+                var data = await fetch(`http://www.omdbapi.com/?apikey=${API_KEY}&s=${inputData}`)
+                data = await data.json()
+            }else{
+                data = ""
+            }
+            console.log(data);
+            
+            var mainContainer = document.querySelector('.showOption')
+            mainContainer.innerHTML = "";
+            for(var i=0;i<data.Search.length;i++) {
+                var container = document.createElement('div')
+                container.innerText = data.Search[i].Title?data.Search[i].Title:""
+                container.classList.add('optionsContainer')
+                mainContainer.append(container)
+            }
+
+        }
+
+        const doSomething = (fn,d) => {
+            let id;
+            return function (){
+                id && clearTimeout(id)
+                id = setTimeout(() => {
+                    fn();
+                },d)
+            }
+        }
+
+        
+        const betterFunction = doSomething(handleType,500)
+
+    </script>
+</body>
+</html>
