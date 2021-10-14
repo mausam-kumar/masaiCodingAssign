@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>FoodApp</title>
+    <style>
+        *{
+            padding: 0px;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body{
+            width: 100%;
+        }
+        .header{
+            width: 100%;
+            height: 100px;
+            display: flex;
+            justify-content:space-around;
+            align-items: center;
+            /* border:1px solid crimson; */
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+        }
+        .input{
+            display: flex;
+            justify-content:center;
+            align-items: center;
+            color: rgb(95, 95, 95);
+        }
+        .inputBox>input{
+            width: 350px;
+            height: 50px;
+            padding:5px;
+            /* margin-right: 10px; */
+            border:none;
+            outline:none;
+            font-size:21px;
+            box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+            cursor: pointer;
+        }
+        .searchIcon{
+            width:50px;
+            height: 50px;
+            display: flex;
+            justify-content:center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+        }
+        a{
+            text-decoration:none;
+            list-style: none;
+            color: crimson;
+            font-size: 25px;
+            font-weight: 500;
+            transition:.3s all ease-in-out;
+        }
+        a:hover{
+            color: cornflowerblue;
+        }
+    </style>
+</head>
+<body>
+    <div class="mainContainer">
+        <div class="header">
+            <div class="input">
+                <div class="inputBox">
+                    <input type="text" name="inputSpace" id="inputSpace" placeholder="Search">
+                </div>
+                <div class="searchIcon" onclick="fetchData()">
+                    <i class="fas fa-search"></i>
+                </div>
+            </div>
+            <a href="./receipeOfDay.html">Receipe of the day</a>
+            <a href="./latest.html">Latest receipe</a>
+        </div>
+    </div>
+    
+    <div class="foodContainer">
+        <!-- <div class="foodContainerCard">
+            <img src="https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg" alt="">
+            <p>strMeal</p>
+            <p>strCategory</p>
+            <p>strArea</p>
+            <p>strInstructions</p>
+        </div> -->
+    </div>
+    <script type="">
+
+        // import {header,fetchData,displayCard} from './index.js'
+
+        async function fetchData() {
+            var itemName = document.querySelector('#inputSpace').value;
+            var data = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${itemName}`)
+            data = await data.json()
+            console.log(data);
+            await displayCard(data)
+        }
+        
+        function displayCard(data){
+            var mainContainer = document.querySelector('.foodContainer')
+            mainContainer.innerHTML = ""
+            var container = document.createElement('div')
+            console.log(data.meals);
+            const {strMeal,strCategory,strInstructions,strArea,strMealThumb} = data.meals[0] 
+            container.innerHTML = `
+                <img src="${strMealThumb}" alt="">
+                <p>${strMeal}</p>
+                <p>${strCategory}</p>
+                <p>${strArea}</p>
+                <p>${strInstructions}</p>
+            `
+            mainContainer.append(container)
+        }
+        
+        // async function displayLatest(){
+        //     var itemName = document.querySelector('#inputSpace').value;
+        //     var data = await fetch(`https://www.themealdb.com/api/json/v1/1/random.php`)
+        //     data = await data.json()
+        //     await displayCard(data)
+        // }
+
+        // async function receipeofday() {
+        //     var itemName = document.querySelector('#inputSpace').value;
+        //     var data = await fetch(`https://www.themealdb.com/api/json/v1/1/random.php`)
+        //     data = await data.json()
+        //     await displayCard(data)
+        // }
+    </script>
+</body>
+</html>
