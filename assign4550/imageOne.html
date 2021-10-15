@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Image</title>
+    <style>
+        *{
+            padding: 0px;
+            margin: 0px;
+            box-sizing: border-box;
+        }
+        body{
+            width: 100%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .header{
+            width: 100%;
+            height: 100px;
+            display: flex;
+            justify-content:space-around;
+            align-items: center;
+            /* border:1px solid crimson; */
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+        }
+        .input{
+            display: flex;
+            justify-content:center;
+            align-items: center;
+            color: rgb(95, 95, 95);
+        }
+        .inputBox>input,select{
+            width: 350px;
+            height: 50px;
+            padding:5px;
+            /* margin-right: 10px; */
+            border:none;
+            outline:none;
+            font-size:21px;
+            box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+            cursor: pointer;
+        }
+        .searchIcon{
+            width:50px;
+            height: 50px;
+            display: flex;
+            justify-content:center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+        }
+        .imageContainer{
+            display: flex;
+            flex-wrap: wrap;
+        }
+        img{
+            width: 200px;
+            height: 200px;
+            margin:20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="input">
+            <div class="inputBox">
+                <input type="text" name="inputSpace" id="inputSpace" placeholder="Search">
+            </div>
+            <div class="searchIcon" onclick="handleSearch()">
+                <i class="fas fa-search"></i>
+            </div>
+        </div>
+        <select name="category" id="category">
+            <option value="Select Category">Select Category</option>
+            <option value="background">Background</option>
+        </select>
+    </div>
+
+
+    <div class="displayContainer">
+        <div class="imageContainer">
+
+        </div>
+    </div>
+
+    <script>
+        const access_key = "SnzbZhFmgR6MNERoBr_Q7A3xxxo4yrVC9wbLHDlAoXQ"
+        const secret_key = "JHTt78ow-LbTLDotxqsvZoSTktjm3Nq3TVZNxwVJ1AE"
+        // const link = `https://api.unsplash.com/search/photos?page=1&query=${searchValue}&client_id=${access_key}`
+
+        async function handleSearch(){
+            var searchValue = document.querySelector('#inputSpace').value;
+            let data = await fetch(`https://api.unsplash.com/search/photos?page=1&query=${searchValue}&client_id=${access_key}&per_page=20`)
+            data = await data.json()
+            console.log(data);
+            var container = document.querySelector('.imageContainer')
+            for (let i = 0; i < data.results.length;i++){
+
+                var newImg = document.createElement('img')
+                newImg.src = data.results[i].urls.raw
+
+                container.append(newImg)
+
+            }
+
+        }
+
+    </script>
+</body>
+</html>
