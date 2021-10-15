@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alert Button</title>
+    <style>
+        button{
+            height: 50px;
+            width: 145px;
+            background-color:crimson;
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size:22px;
+            border: none;
+            border-radius:10px;
+            cursor: pointer;
+            margin: 15px;
+        }
+    </style>
+</head>
+<body>
+    <button onclick="appendButton()">
+        Show Button
+    </button>
+
+    <div class="buttonContainer">
+
+    </div>
+
+
+    <script>
+
+        function appendButton(){
+            var mainDiv = document.createElement('div');
+
+            for(var i=0;i<5;i++){
+
+                var newBtn = document.createElement('button');
+                newBtn.addEventListener('click',handleAlert)
+                newBtn.innerText = i+1
+                mainDiv.append(newBtn)
+            }
+
+            document.querySelector('.buttonContainer').append(mainDiv)
+
+        }
+        
+        function handleAlert(){
+            alert(event.target.innerText)
+        }
+
+    </script>
+</body>
+</html>
